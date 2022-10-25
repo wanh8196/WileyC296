@@ -2,35 +2,50 @@
 
 echo "Enter your password: "
 read password
-length=`echo  "$password" | wc -m`
-letter=`echo  "$password" | grep -i "[a-z]"`
-number=`echo  "$password" | grep "[0-9]"`
-upperCase=`echo  "$password" | grep "[A-Z]"`
-lowerCase=`echo  "$password" | grep "[a-z]"`
-
-#Check if length is 8 or more character
-if (length < 8)
+#check length
+if [ ${#password} -gt  7 ]
 then
-	echo "Password must contain 8 or more characters"	
-	#Check if password contain letters
-	elif [ -z "$letter" ]
-	then
-		echo "Password must contain at least 1 letter"		
-		#Check if password contain numbers
-	       elif [-z "$number"]
-	       then
-			echo "Password must contain at least 1 number" 	 		
-			#Check if password contain uppercase
-			elif [-z "$upperCase"]
-			then
-				echo "Password must contain at least 1 uppercase letter"				
-				#Check if password contain lowercase
-				elif [-z "$lowerCase"]
-				then
-					echo "Password must contain at least 1 lowercase letter"
+	con="TRUE"
 else
-	echo "Your password is accepted!"
+	echo "Password length should be 8 or more characters."
+	exit 1
+fi
+#check numbers
+i=`echo $password | grep "[0-9]"`
+if [ -z "$i" ]
+then
+	echo "Password must contain at least 1 digit."
+	exit 1
+else
+	con="TRUE"
+fi
+#check letter
+i=`echo $password | grep "[a-z]"`
+if [ -z "$i" ]
+then
+	echo "Password must contain at  least 1 letter."
+	exit 1
+else
+	con="TRUE"
+fi
+#check uppercase
+i=`echo $password | grep "[A-Z]"`
+if [ -z "$i" ]
+then
+	echo "Password must contain at least 1 uppercase."
+	exit 1
+else
+	con="TRUE"
+fi
+#check lowercase
+i=`echo $password | grep "[a-z]"`
+if [ -z "$i" ]
+then
+	echo "Password must contain at least 1 lowercase."
+	exit 1
+else
+	con="TRUE"
 fi
 
-exit 0
+echo "Password accepted."
 
