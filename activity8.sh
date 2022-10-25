@@ -11,7 +11,7 @@ for((i=0;i<10;i++))
 do
 	if [ $i -gt 4 ]
 	then
-		echo "Do you want to enter the" $(($i+1))"th number? (yes/no)"
+		echo "Do you want to enter another number? (yes/no)"
 	read user_input
 
 	if [ $user_input = 'no' ]
