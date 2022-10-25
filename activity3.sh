@@ -1,33 +1,34 @@
 #!/bin/sh
 
-a=0
-arr=(1 2 3 4 5)
-
-while [ $a -lt 5 ]
-do
-	b=$((1 + $RANDOM % 50))
-	arr[$a]=$b
-	a=$(($a+1))
-done
-
 echo "Enter your lottery number:"
 read input
 
-i=0
+arr=`shuf -n 5 -e {1..50}`
+arr+=`shuf -n 1 -e {1..10}`
+
+match=0
 count=0
 
-while [ $i -lt 5 ]
+for i in "${arr[@]}"
 do
-	current_number=${arr[$i]}
-	if [ current_number = input ]
+	if [ "$input" = "$i" ]
 	then
-		count=$(($count+1))
-		echo "Your lottery numbers matches!"
-	else echo "Your lottery numbers don't match!"
+		echo "You match!"
+		((count++))
+		((match++))
+elif [ "$input" = "$i" ] && [ "$count" = 6 ]
+then
+	((match++))
+	echo "You match the bonus ball!"
 	fi
-	i=$(($i+1))
 done
 
-echo "Number of matches:" $count
-echo $arr[a]  >> lottery`date +%Y%m%d`.txt
+if [ "$match" = 0 ]
+then
+	echo "You have no matches!"
+fi
+
+
+echo "Number of matches:" $match
+echo $arr  > lottery`date +%Y%m%d`.txt
 
